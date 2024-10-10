@@ -1,11 +1,11 @@
-import connectToDatabase from '../../../../lib/db'
+import { connectDB } from '../../../../lib/db';
 import Product from '../../../../models/product';
 import { NextResponse } from 'next/server';
 import { isValidObjectId } from 'mongoose';
 
 export async function GET(request, { params }) {
   try {
-    await connectToDatabase();
+    await connectDB();
     const { id } = params;
 
     console.log(`Attempting to fetch product with ID: ${id}`);

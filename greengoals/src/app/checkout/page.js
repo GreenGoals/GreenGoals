@@ -85,7 +85,7 @@ const CheckoutPage = () => {
       const response = await fetch('/api/braintree/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ paymentMethodNonce: nonce, amount: formattedAmount }),
+        body: JSON.stringify({ paymentMethodNonce: nonce, amount: formattedAmount , status: 'pending'}),
       });
 
       const contentType = response.headers.get("content-type");

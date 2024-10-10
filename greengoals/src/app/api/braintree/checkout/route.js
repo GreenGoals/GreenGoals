@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import braintree from 'braintree';
-import connectToDatabase from '../../../../lib/db';
+import { connectDB } from '../../../../lib/db';
 import Transaction from '../../../../models/Transaction';
+import { auth } from '../../../../middleware/auth';
 
 const gateway = new braintree.BraintreeGateway({
   environment: braintree.Environment.Sandbox,
@@ -10,12 +11,12 @@ const gateway = new braintree.BraintreeGateway({
   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
 });
 
-export async function POST(req) {
+async function handlePurchase(req) {
   try {
-    await connectToDatabase();
+    await connectDB();
 
     const body = await req.json();
-    const { paymentMethodNonce, amount } = body;
+    const { paymentMethodNonce, amount, status } = body;
 
     if (!paymentMethodNonce || !amount) {
       return NextResponse.json(
@@ -39,6 +40,8 @@ export async function POST(req) {
         transactionId: result.transaction.id,
         amount,
         paymentMethodNonce,
+        status: status || 'pending',
+        user: req.user.userId // Add the user ID to the transaction
       });
 
       await transaction.save();
@@ -62,3 +65,5 @@ export async function POST(req) {
     );
   }
 }
+
+export const POST = auth(handlePurchase);
