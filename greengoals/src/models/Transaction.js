@@ -18,6 +18,16 @@ const TransactionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status:{
+    type: String,
+    default: 'pending',
+    enum: ['pending', 'completed', 'failed']
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
 });
 
 // Check if the model already exists before compiling it

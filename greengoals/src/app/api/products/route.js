@@ -1,18 +1,20 @@
-import connectToDatabase from '../../../lib/db';
+
+import { connectDB } from '../../../lib/db';
+
 import Product from '../../../models/product';
 import { NextResponse } from 'next/server';
 
 // GET: Fetch all products
 export async function GET() {
-  await connectToDatabase();
+  await connectDB();
   const products = await Product.find({});
   return NextResponse.json(products);
 }
 
 // POST: Add a new product (Admin only)
 export async function POST(req) {
-  await connectToDatabase();
-  const body = await req.json();
+    await connectDB();
+    const body = await req.json();
 
   const product = new Product({
     name: body.name,
