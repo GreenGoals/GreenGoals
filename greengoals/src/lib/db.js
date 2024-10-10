@@ -1,9 +1,10 @@
-const mongoose = require("mongoose");
+// src/lib/db.js
+import mongoose from "mongoose";
 
-const connectDB = async () => {
+export async function connectDB() {
   try {
     await mongoose.connect(
-      "mongodb+srv://alaaata25:Admin12345@green.dmt3v.mongodb.net/?retryWrites=true&w=majority&appName=Green",
+      process.env.MONGODB_URI,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -12,8 +13,6 @@ const connectDB = async () => {
     console.log("MongoDB connected successfully");
   } catch (err) {
     console.error("MongoDB connection error:", err);
-    process.exit(1); // Exit the process with failure
+    process.exit(1);
   }
-};
-
-module.exports = connectDB;
+}
