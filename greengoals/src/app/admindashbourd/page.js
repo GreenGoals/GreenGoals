@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { Home, Settings, User, Mail } from "lucide-react";
-
+import { UserDashboard } from "../admincomponents/users";
+import { ProductsPage } from "../admincomponents/addproduct";
 // Placeholder components for demonstration
 const HomePage = () => <div className="p-4">Home Page Content</div>;
 const SettingsPage = () => <div className="p-4">Settings Page Content</div>;
@@ -9,8 +10,8 @@ const Layout = () => {
   const [activeTab, setActiveTab] = useState("home");
 
   const tabs = [
-    { id: "home", name: "Products", icon: Home, component: SettingsPage },
-    { id: "profile", name: "Profile", icon: User, component: SettingsPage },
+    { id: "home", name: "Products", icon: Home, component: UserDashboard },
+    { id: "profile", name: "Profile", icon: User, component: ProductsPage },
     { id: "requests", name: "Requests", icon: Mail, component: SettingsPage },
     { id: "payments", name: "Payments", icon: Mail, component: SettingsPage },
     { id: "plantForm", name: "PlantForm", icon: Mail, component: SettingsPage },
