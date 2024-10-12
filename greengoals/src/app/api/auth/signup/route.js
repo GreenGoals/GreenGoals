@@ -27,8 +27,11 @@ export async function POST(request) {
 
     await user.save();
 
-    return NextResponse.json({ message: 'User created successfully' }, { status: 201 });
-  } catch (error) {
+    return NextResponse.json({ 
+      message: 'User created successfully',
+      user: { id: user._id, name: user.name, email: user.email } 
+    }, { status: 201 });
+    } catch (error) {
     console.error('Signup error:', error);
     return NextResponse.json({ message: 'Server error' }, { status: 500 });
   }

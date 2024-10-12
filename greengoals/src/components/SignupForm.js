@@ -24,7 +24,20 @@ const SignupForm = () => {
       // Handle error
       console.error('Signup failed');
     }
+
+
+    if (response.ok) {
+      const data = await response.json(); // Get the response data
+      sessionStorage.setItem('user', JSON.stringify(data.user)); // Store user data in session storage
+      router.push('/login'); // Redirect to the login page
+    } else {
+      // Handle error
+      const errorData = await response.json();
+      console.error('Signup failed:', errorData.message);
+    }
+    
   };
+  
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8 p-6 bg-[#FFF8E8] rounded-lg shadow-md">

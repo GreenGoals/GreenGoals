@@ -1,5 +1,4 @@
-// src/models/User.js
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose"; // Importing both mongoose and Schema
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -15,9 +14,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  friends: {
+    type: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    default: [],
+  },
+  isactive: {
+    type: Boolean,
+    default: true,
   },
   isactive: {
     type: Boolean,
