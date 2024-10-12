@@ -2,13 +2,16 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import Header from './navbar/page'
 
 export default function Home() {
   const [progress, setProgress] = useState(65)
 
   return (
     <div className="min-h-screen bg-[#FFF8E8]">
-
+  <div>
+ 
+  </div>
 
       <main className="container mx-auto px-4 py-8">
         <section className="flex flex-col md:flex-row items-center justify-between mb-16">

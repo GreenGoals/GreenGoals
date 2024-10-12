@@ -12,25 +12,32 @@ const SignupForm = () => {
   const router = useRouter()
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    try {
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
-      })
-      if (response.ok) {
-        router.push('/login')
-      } else {
-        const data = await response.json()
-        setError(data.message || 'Signup failed')
-      }
-    } catch (err) {
-      console.error('Signup error:', err)
-      setError('An unexpected error occurred')
+    e.preventDefault();
+    const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password }),
+    });
+    if (response.ok) {
+      router.push('/login');
+    } else {
+      // Handle error
+      console.error('Signup failed');
     }
-  }
+
+
+    if (response.ok) {
+      const data = await response.json(); // Get the response data
+      sessionStorage.setItem('user', JSON.stringify(data.user)); // Store user data in session storage
+      router.push('/login'); // Redirect to the login page
+    } else {
+      // Handle error
+      const errorData = await response.json();
+      console.error('Signup failed:', errorData.message);
+    }
+
+  };
+
 
   return (
     <div className="min-h-screen bg-[#FFF8E8] flex flex-col justify-center py-12 sm:px-6 lg:px-8">

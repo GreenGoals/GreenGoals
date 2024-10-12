@@ -1,3 +1,4 @@
+
 // app/api/profile/route.js
 import { auth } from '@/middleware/auth';
 import User from '@/models/User';
@@ -42,3 +43,7 @@ export const PUT = auth(async (req) => {
     }
   });
   
+
+
+
+
