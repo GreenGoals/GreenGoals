@@ -26,6 +26,9 @@ const Header = () => {
             <Link href="/ContactUs" className="text-[#674636] hover:text-[#AAB396] transition-colors duration-300">
               Contact
             </Link>
+            <Link href="/Community" className="text-[#674636] hover:text-[#AAB396] transition-colors duration-300">
+              Community
+            </Link>
           </div>
           
           <div className="flex items-center space-x-4">
