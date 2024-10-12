@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Home, Settings, User, Mail } from "lucide-react";
 import { UserDashboard } from "../admincomponents/users";
 import { ProductsPage } from "../admincomponents/addproduct";
+import { ContactUsDashboard } from "../admincomponents/contactus";
 // Placeholder components for demonstration
 const HomePage = () => <div className="p-4">Home Page Content</div>;
 const SettingsPage = () => <div className="p-4">Settings Page Content</div>;
@@ -12,7 +13,12 @@ const Layout = () => {
   const tabs = [
     { id: "home", name: "Products", icon: Home, component: UserDashboard },
     { id: "profile", name: "Profile", icon: User, component: ProductsPage },
-    { id: "requests", name: "Requests", icon: Mail, component: SettingsPage },
+    {
+      id: "requests",
+      name: "Requests",
+      icon: Mail,
+      component: ContactUsDashboard,
+    },
     { id: "payments", name: "Payments", icon: Mail, component: SettingsPage },
     { id: "plantForm", name: "PlantForm", icon: Mail, component: SettingsPage },
   ];
