@@ -3,17 +3,20 @@ import mongoose, { Schema } from "mongoose"; // Importing both mongoose and Sche
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    // required: true,
   },
   email: {
     type: String,
-    required: true,
+    // required: true,
     unique: true,
   },
   password: {
     type: String,
-    required: true,
+    
   },
+
+  googleId: { type: String, unique: true },
+
   friends: {
     type: [{ type: Schema.Types.ObjectId, ref: "User" }],
     default: [],

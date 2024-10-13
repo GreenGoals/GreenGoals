@@ -2,6 +2,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { CartProvider } from './context/cartcontext'; // Ensure this path is correct
+import SessionLayout from "@/components/SessionLayout";
 
 
 import Header from "./navbar/page";
@@ -29,9 +30,11 @@ export default function RootLayout({ children }) {
     <CartProvider>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <SessionLayout>
           <Header/>
           {children}
           <Footer/>
+        </SessionLayout>
         </body>
       </html>
     </CartProvider>

@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import GoogleButton from './GoogleButton'
+
 
 const SignupForm = () => {
   const [name, setName] = useState('')
@@ -153,6 +155,8 @@ const SignupForm = () => {
               </button>
             </div>
           </form>
+          <GoogleButton/>
+
 
           <div className="mt-6">
             <div className="relative">
