@@ -3,10 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Home, LogIn, UserPlus, LogOut } from 'lucide-react';
+
+import { Home, LogIn, UserPlus, LogOut, ShoppingCart } from 'lucide-react';
+import { useCart } from '../context/cartcontext';  // Make sure this import path is correct
 
 const Header = () => {
   const router = useRouter();
+  const { cartItemsCount } = useCart();
+
 
   const handleLogout = async () => {
     const response = await fetch('/api/auth/logout', { method: 'POST' });
@@ -43,6 +47,17 @@ const Header = () => {
           </div>
           
           <div className="flex items-center space-x-4">
+
+            <Link href="/cart" className="text-[#674636] hover:text-[#AAB396] transition-colors duration-300 flex items-center relative">
+              <ShoppingCart className="mr-1" size={18} />
+              Cart
+              {cartItemsCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  {cartItemsCount}
+                </span>
+              )}
+            </Link>
+
             <Link href="/login" className="text-[#674636] hover:text-[#AAB396] transition-colors duration-300 flex items-center">
               <LogIn className="mr-1" size={18} /> Login
             </Link>
