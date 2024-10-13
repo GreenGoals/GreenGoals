@@ -7,6 +7,7 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
 
   // Load cart from localStorage on initial render
   useEffect(() => {
@@ -15,6 +16,7 @@ export const CartProvider = ({ children }) => {
     if (storedCart) {
       const parsedCart = JSON.parse(storedCart);
       setCart(parsedCart);
+      setCartItemsCount(parsedCart.length);
       console.log('Initialized cart from localStorage:', parsedCart);
     }
     setIsInitialized(true);
@@ -25,6 +27,7 @@ export const CartProvider = ({ children }) => {
     if (isInitialized) {
       console.log('Updating localStorage with cart:', cart);
       localStorage.setItem('cart', JSON.stringify(cart));
+      setCartItemsCount(cart.length);
     }
   }, [cart, isInitialized]);
 
@@ -55,7 +58,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, totalPrice }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, totalPrice, cartItemsCount }}>
       {children}
     </CartContext.Provider>
   );

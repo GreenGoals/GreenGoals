@@ -29,7 +29,9 @@ export default function RootLayout({ children }) {
     <CartProvider>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <Header/>
           {children}
+          <Footer/>
         </body>
       </html>
     </CartProvider>

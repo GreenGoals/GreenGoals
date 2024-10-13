@@ -6,6 +6,7 @@ export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   useEffect(() => {
     async function fetchProducts() {
@@ -37,39 +38,61 @@ export default function ProductsPage() {
     return acc;
   }, {});
 
+  const categories = ['All', ...Object.keys(productsByCategory)];
+
   return (
     <div className="bg-[#FFF8E8] min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-8 text-center text-[#674636]">Product Listing</h1>
         
-        {Object.entries(productsByCategory).map(([category, categoryProducts]) => (
-          <div key={category} className="mb-12">
-            <h2 className="text-3xl font-semibold mb-6 text-[#674636] border-b-2 border-[#674636] pb-2">{category}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
-              {categoryProducts.map((product) => (
-                <Link href={`/products/${product._id}`} key={product._id} className="w-full max-w-sm">
-                  <div className="bg-[#F7EED3] rounded-lg p-6 shadow-lg cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 h-full flex flex-col justify-between">
-                    <div>
-                      <img
-                        src={product.images[0]}
-                        alt={product.name}
-                        className="w-full h-48 object-contain rounded-md mb-4"
-                      />
-                      <h3 className="text-xl font-semibold text-[#674636] mb-2">{product.name}</h3>
-                      <p className="text-[#674636] opacity-80 mb-3 flex-grow">{product.description}</p>
-                    </div>
-                    <div className="mt-auto">
-                      <div className="flex justify-between items-center">
-                        <p className="text-lg font-bold text-[#674636]">${product.price}</p>
-                        <p className="text-sm text-[#674636] opacity-70">Stock: {product.stock}</p>
+        <div className="mb-8">
+          <label htmlFor="category-filter" className="block text-[#674636] mb-2">Filter by Category:</label>
+          <select
+            id="category-filter"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full md:w-64 p-2 rounded-md bg-[#F7EED3] text-[#674636] border border-[#674636]"
+          >
+            {categories.map(category => (
+              <option key={category} value={category}>{category}</option>
+            ))}
+          </select>
+        </div>
+
+        {Object.entries(productsByCategory).map(([category, categoryProducts]) => {
+          // Only render the category if it's selected or if "All" is selected
+          if (selectedCategory === 'All' || selectedCategory === category) {
+            return (
+              <div key={category} className="mb-12">
+                <h2 className="text-3xl font-semibold mb-6 text-[#674636] border-b-2 border-[#674636] pb-2">{category}</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+                  {categoryProducts.map((product) => (
+                    <Link href={`/products/${product._id}`} key={product._id} className="w-full max-w-sm">
+                      <div className="bg-[#F7EED3] rounded-lg p-6 shadow-lg cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 h-full flex flex-col justify-between">
+                        <div>
+                          <img
+                            src={product.images[0]}
+                            alt={product.name}
+                            className="w-full h-48 object-contain rounded-md mb-4"
+                          />
+                          <h3 className="text-xl font-semibold text-[#674636] mb-2">{product.name}</h3>
+                          <p className="text-[#674636] opacity-80 mb-3 flex-grow">{product.description}</p>
+                        </div>
+                        <div className="mt-auto">
+                          <div className="flex justify-between items-center">
+                            <p className="text-lg font-bold text-[#674636]">${product.price}</p>
+                            <p className="text-sm text-[#674636] opacity-70">Stock: {product.stock}</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          }
+          return null;
+        })}
       </div>
     </div>
   );
